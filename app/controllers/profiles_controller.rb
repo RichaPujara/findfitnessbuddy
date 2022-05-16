@@ -9,8 +9,9 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1 or /profiles/1.json
   def show
-    @address = Address.find(params[:id])
     
+    @address = Address.find(params[:id])
+
   end
 
   # GET /profiles/new
@@ -25,7 +26,9 @@ class ProfilesController < ApplicationController
   # POST /profiles or /profiles.json
   def create
       @profile = Profile.new(profile_params)
+      
       @profile.user_id = current_user.id
+      @address = Address.create(address_params)
       respond_to do |format|
         if @profile.save
           format.html { redirect_to profile_url(@profile), notice: "Profile was successfully created." }
