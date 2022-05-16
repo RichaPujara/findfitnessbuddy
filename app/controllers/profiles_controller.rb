@@ -28,9 +28,10 @@ class ProfilesController < ApplicationController
       @profile = Profile.new(profile_params)
       
       @profile.user_id = current_user.id
-      @address = Address.create(address_params)
+      @address = Address.new(address_params)
       respond_to do |format|
         if @profile.save
+          @address.save
           format.html { redirect_to profile_url(@profile), notice: "Profile was successfully created." }
           format.json { render :show, status: :created, location: @profile }
         else
@@ -73,5 +74,8 @@ class ProfilesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def profile_params
       params.require(:profile).permit(:user_id, :first_name, :last_name, :contact_number, :username)
+    end
+    def address_params
+      params.require(:address).permit(:profile_id, :street, :suburb, :city, :state, :country, :postcode)
     end
 end

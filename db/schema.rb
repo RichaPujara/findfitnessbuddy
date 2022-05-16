@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_16_132406) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_16_141408) do
   create_table "addresses", force: :cascade do |t|
     t.integer "profile_id", null: false
     t.string "street"
@@ -75,6 +75,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_16_132406) do
     t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
+  create_table "workout_sessions", force: :cascade do |t|
+    t.datetime "start_time"
+    t.integer "duration"
+    t.string "workout_type"
+    t.date "date"
+    t.string "workout_category"
+    t.text "description"
+    t.float "fees"
+    t.string "difficulty_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "addresses", "profiles"

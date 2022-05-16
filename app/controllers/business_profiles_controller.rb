@@ -1,4 +1,5 @@
 class BusinessProfilesController < ApplicationController
+  before_action :authenticate_user!, only: %i[new edit update create destroy]
   before_action :set_business_profile, only: %i[ show edit update destroy ]
 
   # GET /business_profiles or /business_profiles.json

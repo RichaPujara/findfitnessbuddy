@@ -1,14 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Business profiles</h1>
+<h1>Fitness Buddies</h1>
 
 <div id="business_profiles">
   <% @business_profiles.each do |business_profile| %>
     <%= render business_profile %>
     <p>
-      <%= link_to "Show this business profile", business_profile %>
+      <%= link_to "#{business_profile.name}", business_profile %>
     </p>
   <% end %>
 </div>
+<div>
+<p> Wanna Be Someone else's Fitness Buddy?</p>
 
-<%= link_to "New business profile", new_business_profile_path %>
+<%= link_to "Register here", new_business_profile_path %>
+</div>

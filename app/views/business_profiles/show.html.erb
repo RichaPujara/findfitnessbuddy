@@ -3,8 +3,8 @@
 <%= render @business_profile %>
 
 <div>
-  <%= link_to "Edit this business profile", edit_business_profile_path(@business_profile) %> |
-  <%= link_to "Back to business profiles", business_profiles_path %>
+  <%= link_to "Edit", edit_business_profile_path(@business_profile) %> |
+  <%= link_to "Back", business_profiles_path %>
 
-  <%= button_to "Destroy this business profile", @business_profile, method: :delete %>
+  <%= button_to "Delete", @business_profile, method: :delete %>
 </div>

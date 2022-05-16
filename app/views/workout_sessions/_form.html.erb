@@ -1,0 +1,57 @@
+<%= form_with(model: workout_session) do |form| %>
+  <% if workout_session.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(workout_session.errors.count, "error") %> prohibited this workout_session from being saved:</h2>
+
+      <ul>
+        <% workout_session.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :start_time, style: "display: block" %>
+    <%= form.datetime_field :start_time %>
+  </div>
+
+  <div>
+    <%= form.label :duration, style: "display: block" %>
+    <%= form.number_field :duration %>
+  </div>
+
+  <div>
+    <%= form.label :workout_type, style: "display: block" %>
+    <%= form.text_field :workout_type %>
+  </div>
+
+  <div>
+    <%= form.label :date, style: "display: block" %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :workout_category, style: "display: block" %>
+    <%= form.text_field :workout_category %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :fees, style: "display: block" %>
+    <%= form.text_field :fees %>
+  </div>
+
+  <div>
+    <%= form.label :difficulty_level, style: "display: block" %>
+    <%= form.text_field :difficulty_level %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
