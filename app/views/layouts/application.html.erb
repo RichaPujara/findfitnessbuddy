@@ -11,9 +11,8 @@
   </head>
 
   <body class= "container">
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
       <div class="container-fluid">
-        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,51 +21,15 @@
             <li class="nav-item">
               <%= link_to 'Home', root_path , class: 'nav-link' %>
             </li>
-            <li class="nav-item">
-              <%= link_to 'Find me a Buddy', business_profiles_path , class: 'nav-link' %>
-            </li>
-            <%
-=begin%>
- <li class="nav-item">
-              <%= link_to 'Workout Sessions', business_profile_workout_sessions_path , class: 'nav-link' %>
-            </li> 
-<%
-=end%>
-            <%
-=begin%>
- <li class="nav-item">
-              <%= link_to 'Create Session', new_business_profile_workout_session_path , class: 'nav-link' %>
-            </li> 
-<%
-=end%>
-            <%
-=begin%>
- <li class="nav-item">
-              <%= link_to 'My Bookings', user_bookings_path , class: 'nav-link' %>
-            </li> 
-<%
-=end%>
-            <li class="nav-item">
-              <%= link_to 'All Users', '/users/index' , class: 'nav-link' %>
-            </li>
-
-          </ul>
+            </ul>
           <% if user_signed_in? %>
             <div class="ml-auto btn-toolbar p-3">
-              Welcome, <%= current_user.profile.username if current_user.profile %> !
+              Welcome, <%= current_user.first_name %> !
             </div>
-            <div class="nav-item">
-            <% if @profile %>
-              <%= link_to 'Profile', @profile %>
-            <% else %>
-              <%
-=begin%>
- <%= link_to 'Profile', new_user_profile_path %> 
-<%
-=end%>
-            <% end %>
+            <div class="ml-auto btn-toolbar p-3">
+              <%= link_to "Profile Update", edit_user_registration_path, class: 'nav-link' %>
             </div > 
-            <div class="ml-auto btn-toolbar">
+            <div class="ml-auto btn-toolbar p-3">
               <%= button_to 'Logout', destroy_user_session_path, class: 'btn btn-primary', method: :delete, form: { data: { turbo_confirm: "Are you sure you want to log out? " } } %>
             </div>
           <% else %>
@@ -77,20 +40,18 @@
               <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
             </div>
             
-            <%end%>
-          </div>
+          <%end%>
         </div>
       </div>
     </nav>
     <main class="p-3">
-    <% if notice %>
-      <p class="alert alert-info notice" role = "alert"><%= notice %></p>
-    <%end%>
-    <%if alert %>
-      <p class=" alert alert-danger" role = "alert"><%= alert %></p>
-      
-    <%end%>
-    <%= yield %>
+      <% if notice %>
+        <p class="alert alert-info notice" role = "alert"><%= notice %></p>
+      <%end%>
+      <%if alert %>
+        <p class=" alert alert-danger" role = "alert"><%= alert %></p>
+      <%end%>
+      <%= yield %>
     </main>
   </body>
 </html>
