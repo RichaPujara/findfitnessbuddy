@@ -34,6 +34,9 @@
             <li class="nav-item">
               <%= link_to 'My Bookings', bookings_path , class: 'nav-link' %>
             </li>
+            <li class="nav-item">
+              <%= link_to 'All Users', '/users/index' , class: 'nav-link' %>
+            </li>
 
           </ul>
           <% if user_signed_in? %>

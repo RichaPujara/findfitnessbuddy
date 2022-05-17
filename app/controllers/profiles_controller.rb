@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   before_action :set_profile, only: %i[ show edit update destroy ]
 
   # GET /profiles or /profiles.json
@@ -29,7 +29,7 @@ class ProfilesController < ApplicationController
           format.html { render :new, status: :unprocessable_entity }
         else
           if @profile.save
-            current_user.add_role :owner, @profile
+            current_user.add_role :end_user, @profile
             format.html { redirect_to profile_url(@profile), notice: "Profile was successfully created." }
             format.json { render :show, status: :created, location: @profile }
           else

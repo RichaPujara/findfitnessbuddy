@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+<div>
+    <% @users.each do |user| %>
+        <p><%= "User Id: #{user.id}" %> 
+        <%= "User Email Id: #{user.email}" %> 
+        <%= link_to "profile", user.profile %>
+        <p><%= "User Name : #{user.profile.first_name} #{user.profile.last_name}" if user.profile %> </p>
+        <div> Roles:
+            <% user.roles.each do |role|%>
+                <%=" #{role.name} => #{role.resource_type} #{role.resource_id} " %> 
+            <% end %>
+            </div>
+    <% end %>
+</div>
