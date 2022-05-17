@@ -1,5 +1,5 @@
 class WorkoutSessionsController < ApplicationController
-  # before_action :authenticate_user!, only: [:create, :update, :destroy]
+  # skip_before_action :authenticate_user!, only: [:index, :show]
 
   before_action :set_workout_session, only: %i[ show edit update destroy ]
 
@@ -42,7 +42,7 @@ class WorkoutSessionsController < ApplicationController
   def update
     respond_to do |format|
       if @workout_session.update(workout_session_params)
-        format.html { redirect_to workout_session_url(@workout_session), notice: "Workout session was successfully updated." }
+        format.html { redirect_to @workout_session.business_profile, notice: "Workout session was successfully updated." }
         format.json { render :show, status: :ok, location: @workout_session }
       else
         format.html { render :edit, status: :unprocessable_entity }

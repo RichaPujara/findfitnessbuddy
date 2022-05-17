@@ -5,6 +5,7 @@ class ProfilesController < ApplicationController
   # GET /profiles or /profiles.json
   def index
     @profiles = Profile.all
+    authorize @profiles
   end
 
   # GET /profiles/1 or /profiles/1.json
@@ -29,8 +30,8 @@ class ProfilesController < ApplicationController
           format.html { render :new, status: :unprocessable_entity }
         else
           if @profile.save
-            current_user.add_role :end_user, @profile
-            format.html { redirect_to profile_url(@profile), notice: "Profile was successfully created." }
+            current_user.add_role :trainee, @profile
+            format.html { redirect_to @profile.user, notice: "Profile was successfully created." }
             format.json { render :show, status: :created, location: @profile }
           else
             format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +39,7 @@ class ProfilesController < ApplicationController
           end
         end
       end
-    
+      
   end
 
   # PATCH/PUT /profiles/1 or /profiles/1.json
@@ -52,6 +53,7 @@ class ProfilesController < ApplicationController
         format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
+    authorize @profile
   end
 
   # DELETE /profiles/1 or /profiles/1.json
@@ -68,6 +70,9 @@ class ProfilesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
       @profile = Profile.find(params[:id])
+    end
+    def set_user
+      @user = User.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

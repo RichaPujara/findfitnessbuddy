@@ -1,6 +1,6 @@
 class BusinessProfilesController < ApplicationController
   # before_action :authenticate_user!, only: %i[new edit update create destroy]
-  before_action :set_business_profile, only: %i[ show edit update destroy ]
+  before_action :set_business_profile, only: %i[ show edit update destroy workout_sessions]
 
   # GET /business_profiles or /business_profiles.json
   def index
@@ -9,6 +9,13 @@ class BusinessProfilesController < ApplicationController
 
   # GET /business_profiles/1 or /business_profiles/1.json
   def show
+    @workout_session = @business_profile.workout_sessions.build
+  end
+
+  # GET /business_profiles/1/workout_sessions or /business_profiles/1/workout_sessions.json
+  def workout_sessions
+    business_profile_id = @business_profile.id
+    @workout_session = WorkoutSession.where(business_profile_id: @business_profile.id)
   end
 
   # GET /business_profiles/new

@@ -25,15 +25,27 @@
             <li class="nav-item">
               <%= link_to 'Find me a Buddy', business_profiles_path , class: 'nav-link' %>
             </li>
-            <li class="nav-item">
-              <%= link_to 'Workout Sessions', workout_sessions_path , class: 'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Create Session', new_workout_session_path , class: 'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'My Bookings', bookings_path , class: 'nav-link' %>
-            </li>
+            <%
+=begin%>
+ <li class="nav-item">
+              <%= link_to 'Workout Sessions', business_profile_workout_sessions_path , class: 'nav-link' %>
+            </li> 
+<%
+=end%>
+            <%
+=begin%>
+ <li class="nav-item">
+              <%= link_to 'Create Session', new_business_profile_workout_session_path , class: 'nav-link' %>
+            </li> 
+<%
+=end%>
+            <%
+=begin%>
+ <li class="nav-item">
+              <%= link_to 'My Bookings', user_bookings_path , class: 'nav-link' %>
+            </li> 
+<%
+=end%>
             <li class="nav-item">
               <%= link_to 'All Users', '/users/index' , class: 'nav-link' %>
             </li>
@@ -41,13 +53,17 @@
           </ul>
           <% if user_signed_in? %>
             <div class="ml-auto btn-toolbar p-3">
-              Welcome, <%= current_user.email%> !
+              Welcome, <%= current_user.profile.username if current_user.profile %> !
             </div>
             <div class="nav-item">
             <% if @profile %>
-              <%= link_to 'Profile', "/profile/:id" %>
+              <%= link_to 'Profile', @profile %>
             <% else %>
-              <%= link_to 'Profile', new_profile_path %>
+              <%
+=begin%>
+ <%= link_to 'Profile', new_user_profile_path %> 
+<%
+=end%>
             <% end %>
             </div > 
             <div class="ml-auto btn-toolbar">

@@ -10,8 +10,8 @@
   </p>
 
   <p>
-    <strong>Booking approved:</strong>
-    <%= booking.booking_approved %>
+    <strong>Booking Status:</strong>
+    <%=render plain: booking.booking_approved? ? "Approved" : "Pending" %>
   </p>
 
 </div>

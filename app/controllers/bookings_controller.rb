@@ -26,7 +26,7 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.save
         current_user.add_role :owner, @booking
-        format.html { redirect_to booking_url(@booking), notice: "Booking was successfully created." }
+        format.html { redirect_to @booking.workout_session, notice: "Booking was successfully created." }
         format.json { render :show, status: :created, location: @booking }
       else
         format.html { render :new, status: :unprocessable_entity }
