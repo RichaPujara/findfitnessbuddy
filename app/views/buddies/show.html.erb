@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @buddy %>
+
+<div>
+<p>
+      <%
+=begin%>
+ <%= link_to "Workout Sessions", business_profiles_workout_sessions_path(@business_profile) %> 
+<%
+=end%>
+    </p>
+  <%= link_to "Edit", edit_buddy_path(@buddy) %> |
+  <%= link_to "Back", :back %>
+
+  <%= button_to "Delete", @buddy, method: :delete %>
+</div>

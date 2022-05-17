@@ -1,10 +1,10 @@
-<%= form_with(model: business_profile) do |form| %>
-  <% if business_profile.errors.any? %>
+<%= form_with(model: buddy) do |form| %>
+  <% if buddy.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(business_profile.errors.count, "error") %> prohibited this business_profile from being saved:</h2>
+      <h2><%= pluralize(buddy.errors.count, "error") %> prohibited this buddy from being saved:</h2>
 
       <ul>
-        <% business_profile.errors.each do |error| %>
+        <% buddy.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -24,6 +24,11 @@
   <div>
     <%= form.label :description, style: "display: block" %>
     <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :qualification, style: "display: block" %>
+    <%= form.text_field :qualification %>
   </div>
 
   <div>

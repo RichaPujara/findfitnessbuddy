@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Fitness Buddies</h1>
+
+<div id="buddies">
+  <% @buddies.each do |buddy| %>
+    <%= render buddy %>
+    <p>
+      <%= link_to "#{buddy.name}", buddy %>
+    </p>
+  <% end %>
+</div>
+<div>
+<p> Do you wanna Be Someone else's Fitness Buddy?</p>
+
+<%= link_to "Register here", new_buddy_path %>
+</div>
