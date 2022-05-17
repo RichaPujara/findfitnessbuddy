@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_profile, only: %i[ show edit update destroy ]
 
   # GET /profiles or /profiles.json
@@ -9,14 +9,11 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1 or /profiles/1.json
   def show
-    
-    @address = Address.find(params[:id])
-
   end
 
   # GET /profiles/new
   def new
-    @profile = Profile.new
+    @profile = Profile.new 
   end
 
   # GET /profiles/1/edit
@@ -26,17 +23,19 @@ class ProfilesController < ApplicationController
   # POST /profiles or /profiles.json
   def create
       @profile = Profile.new(profile_params)
-      
-      @profile.user_id = current_user.id
-      @address = Address.new(address_params)
       respond_to do |format|
-        if @profile.save
-          @address.save
-          format.html { redirect_to profile_url(@profile), notice: "Profile was successfully created." }
-          format.json { render :show, status: :created, location: @profile }
-        else
+        if params[:add_address]
+          @profile.address.build
           format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @profile.errors, status: :unprocessable_entity }
+        else
+          if @profile.save
+            current_user.add_role :owner, @profile
+            format.html { redirect_to profile_url(@profile), notice: "Profile was successfully created." }
+            format.json { render :show, status: :created, location: @profile }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @profile.errors, status: :unprocessable_entity }
+          end
         end
       end
     
@@ -73,9 +72,6 @@ class ProfilesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def profile_params
-      params.require(:profile).permit(:user_id, :first_name, :last_name, :contact_number, :username)
-    end
-    def address_params
-      params.require(:address).permit(:profile_id, :street, :suburb, :city, :state, :country, :postcode)
+      params.require(:profile).permit(:user_id, :first_name, :last_name, :contact_number, :username, address_attributes: [:id, :profile_id, :street, :suburb, :city, :state, :country, :postcode, :add_address])
     end
 end

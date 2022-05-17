@@ -1,0 +1,17 @@
+<div id="<%= dom_id booking %>">
+  <p>
+    <strong>Booking ID</strong>
+    <%= booking.id %>
+  </p>
+
+  <p>
+    <strong>Workout session:</strong>
+    <%= link_to "Session details", booking.workout_session %>
+  </p>
+
+  <p>
+    <strong>Booking approved:</strong>
+    <%= booking.booking_approved %>
+  </p>
+
+</div>

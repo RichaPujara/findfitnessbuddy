@@ -1,5 +1,5 @@
 class BusinessProfilesController < ApplicationController
-  before_action :authenticate_user!, only: %i[new edit update create destroy]
+  # before_action :authenticate_user!, only: %i[new edit update create destroy]
   before_action :set_business_profile, only: %i[ show edit update destroy ]
 
   # GET /business_profiles or /business_profiles.json
@@ -26,6 +26,7 @@ class BusinessProfilesController < ApplicationController
 
     respond_to do |format|
       if @business_profile.save
+        
         format.html { redirect_to business_profile_url(@business_profile), notice: "Business profile was successfully created." }
         format.json { render :show, status: :created, location: @business_profile }
       else

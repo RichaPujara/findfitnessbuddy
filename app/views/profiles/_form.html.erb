@@ -26,7 +26,7 @@
     <%= form.telephone_field :contact_number %>
   </div>
   <div>
-    <%= form.label :username, style: "display: block" %>
+    <%= form.label :username, "Display Name", style: "display: block" %>
     <%= form.text_field :username %>
   </div>
   <div>
@@ -37,8 +37,8 @@
     <%= form.hidden_field :user_id, value: current_user.id %>
   </div>
   <div>
-    <%= form.fields_for :address, profile.address do |address_form| %>
-      <%= address_form.hidden_field :profile_id, value: current_user.id.to_s %>
+    <%= form.fields_for :address do |address_form| %>
+      <%= address_form.hidden_field :profile_id, value: current_user.id %>
       <%= address_form.label :street, "Address", style: "display: block" %>
       <%= address_form.text_field :street, placeholder: "Street", style: "display: block" %>
       <%= address_form.text_field :suburb, placeholder: "Suburb", style: "display: block" %>
@@ -46,7 +46,9 @@
       <%= address_form.text_field :state, placeholder: "State", style: "display: block" %>
       <%= address_form.text_field :country, placeholder: "Country", style: "display: block" %>
       <%= address_form.number_field :postcode, placeholder: "Postcode", style: "display: block" %>
-      <%= address_form.submit %>
+  <div>
+  <%= address_form.submit "Add Address",name: 'add_address' %> 
+  </div>
   </div>
     <% end %>
   <div>

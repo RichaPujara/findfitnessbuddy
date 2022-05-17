@@ -1,4 +1,6 @@
 class WorkoutSessionsController < ApplicationController
+  # before_action :authenticate_user!, only: [:create, :update, :destroy]
+
   before_action :set_workout_session, only: %i[ show edit update destroy ]
 
   # GET /workout_sessions or /workout_sessions.json
@@ -8,6 +10,7 @@ class WorkoutSessionsController < ApplicationController
 
   # GET /workout_sessions/1 or /workout_sessions/1.json
   def show
+    @booking = @workout_session.bookings.build
   end
 
   # GET /workout_sessions/new
@@ -22,9 +25,10 @@ class WorkoutSessionsController < ApplicationController
   # POST /workout_sessions or /workout_sessions.json
   def create
     @workout_session = WorkoutSession.new(workout_session_params)
-
+    
     respond_to do |format|
       if @workout_session.save
+        current_user.add_role :creator, @workout_session
         format.html { redirect_to workout_session_url(@workout_session), notice: "Workout session was successfully created." }
         format.json { render :show, status: :created, location: @workout_session }
       else
@@ -65,6 +69,6 @@ class WorkoutSessionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def workout_session_params
-      params.require(:workout_session).permit(:start_time, :duration, :workout_type, :date, :workout_category, :description, :fees, :difficulty_level)
+      params.require(:workout_session).permit(:start_time, :duration, :workout_type, :date, :workout_category, :description, :fees, :difficulty_level, :business_profile_id)
     end
 end

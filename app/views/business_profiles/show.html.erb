@@ -3,6 +3,9 @@
 <%= render @business_profile %>
 
 <div>
+<p>
+      <%= link_to "Workout Sessions", workout_sessions_path %>
+    </p>
   <%= link_to "Edit", edit_business_profile_path(@business_profile) %> |
   <%= link_to "Back", business_profiles_path %>
 

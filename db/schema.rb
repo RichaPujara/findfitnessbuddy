@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_16_141408) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_17_012355) do
   create_table "addresses", force: :cascade do |t|
     t.integer "profile_id", null: false
     t.string "street"
@@ -22,6 +22,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_16_141408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_addresses_on_profile_id"
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "workout_session_id", null: false
+    t.boolean "booking_approved", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bookings_on_user_id"
+    t.index ["workout_session_id"], name: "index_bookings_on_workout_session_id"
   end
 
   create_table "business_profiles", force: :cascade do |t|
@@ -88,9 +98,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_16_141408) do
     t.string "difficulty_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "business_profile_id", null: false
+    t.index ["business_profile_id"], name: "index_workout_sessions_on_business_profile_id"
   end
 
   add_foreign_key "addresses", "profiles"
+  add_foreign_key "bookings", "users"
+  add_foreign_key "bookings", "workout_sessions"
   add_foreign_key "business_profiles", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "workout_sessions", "business_profiles"
 end
