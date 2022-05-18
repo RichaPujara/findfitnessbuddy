@@ -1,14 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Workout sessions</h1>
+<%=  render "buddy_workout_session" %>
 
-<div id="workout_sessions">
-  <% @workout_sessions.each do |workout_session| %>
-    <%= render workout_session %>
-    <p>
-      <%= link_to "Show this workout session", business_profile_workout_session_path %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New workout session", new_business_profile_workout_session_path %>
+<%= link_to "Create new workout session", new_buddy_workout_session_path(@buddy) %>

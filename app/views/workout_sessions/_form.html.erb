@@ -1,5 +1,7 @@
-<%= form_with(model: workout_session) do |form| %>
-  <% if workout_session.errors.any? %>
+<%= form_with model: [@buddy, @buddy.workout_sessions.build ] do |form| %>
+  <%
+=begin%>
+ <% if workout_session.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(workout_session.errors.count, "error") %> prohibited this workout_session from being saved:</h2>
 
@@ -9,27 +11,28 @@
         <% end %>
       </ul>
     </div>
-  <% end %>
+  <% end %> 
+<%
+=end%>
+
+  <div>
+    <%= form.label  :name, "Session Name", style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
   
   <div>
-    <%= form.label  :start_time, "Session Date and Time", style: "display: block" %>
-    <%= form.datetime_local_field :start_time %>
+    <%= form.label  :date, "Session Date and Time", style: "display: block" %>
+    <%= form.datetime_local_field :date %>
   </div>
 
   <div>
     <%= form.label :duration, style: "display: block" %> 
-    <%= form.number_field :duration, in: 1..100 %> Minutes
+    <%= form.number_field :duration, in: 1..120 %> Minutes
   </div>
 
   <div>
     <%= form.label :workout_type, "Session type", style: "display: block" %>
     <%= form.select :workout_type, ["Personal", "Group"] %>
-    
-  </div>
-
-  <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date %>
   </div>
 
   <div>
@@ -52,9 +55,14 @@
     <%= form.select :difficulty_level, %i[Beginner Intermediate Expert] %>
   </div>
 
-  <div>
-    <%= form.hidden_field :business_profile_id, value: current_user.business_profile.id %>
-  </div>
+  <%
+=begin%>
+ <div>
+    <%= current_buddy_id() %>
+    <%= form.hidden_field :buddies_id, value: current_buddy_id() %>
+  </div> 
+<%
+=end%>
 
   <div>
     <%= form.submit %>

@@ -3,13 +3,19 @@
 <%= render @buddy %>
 
 <div>
-<p>
-      <%
-=begin%>
- <%= link_to "Workout Sessions", business_profiles_workout_sessions_path(@business_profile) %> 
-<%
-=end%>
-    </p>
+  <p> <strong> Workout Sessions: </strong> </p>
+  <div id="workout_sessions">
+  <% @buddy.workout_sessions.each do |workout_session| %>
+    <h3><%= "Title: #{workout_session.name}" %></h3>
+    <p>
+    <%= "Schedule: #{workout_session.date}" %></p><p>
+    <%= "Workout Category: #{workout_session.workout_category}" %></p>
+    <p><%= "Difficulty Level: #{workout_session.difficulty_level}" %></p>
+    <p><%= link_to "More details", buddy_workout_session_url(workout_session, workout_session.id)%> </p>
+    <% end %>
+
+  <%= link_to "Create Workout Session", new_buddy_workout_session_path(@buddy) %> |
+
   <%= link_to "Edit", edit_buddy_path(@buddy) %> |
   <%= link_to "Back", :back %>
 

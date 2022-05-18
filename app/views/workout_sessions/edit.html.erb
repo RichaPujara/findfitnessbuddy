@@ -1,10 +1,82 @@
-<h1>Editing workout session</h1>
+<h1>Update workout session</h1>
 
-<%= render "form", workout_session: @workout_session %>
+<%= form_with model: @workout_session do |form| %>
+  <%
+=begin%>
+ <% if workout_session.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(workout_session.errors.count, "error") %> prohibited this workout_session from being saved:</h2>
+
+      <ul>
+        <% workout_session.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %> 
+<%
+=end%>
+
+  <div>
+    <%= form.label  :name, "Session Name", style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+  
+  <div>
+    <%= form.label  :date, "Session Date and Time", style: "display: block" %>
+    <%= form.datetime_local_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :duration, style: "display: block" %> 
+    <%= form.number_field :duration, in: 1..120 %> Minutes
+  </div>
+
+  <div>
+    <%= form.label :workout_type, "Session type", style: "display: block" %>
+    <%= form.select :workout_type, ["Personal", "Group"] %>
+  </div>
+
+  <div>
+    <%= form.label :workout_category, style: "display: inline" %>
+    <%= form.select :workout_category, ["Aerobics", "Zumba", "Yoga", "HIIT", "Cardio", "Full Body Training","Resistance","Express Workout","Pilates", "Recovery", "Post Pregnancy", "FIIT", "No Equipment", "Core", "Other"] %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :fees, style: "display: inline" %>
+     $ <%= form.number_field :fees, in: 1.0..100.0, step: 0.05 %>
+  </div>
+
+  <div>
+    <%= form.label :difficulty_level, style: "display: inline" %>
+    <%= form.select :difficulty_level, %i[Beginner Intermediate Expert] %>
+  </div>
+
+  <%
+=begin%>
+ <div>
+    <%= current_buddy_id() %>
+    <%= form.hidden_field :buddies_id, value: current_buddy_id() %>
+  </div> 
+<%
+=end%>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
 
 <br>
 
 <div>
-  <%= link_to "Show this workout session", @workout_session %> |
-  <%= link_to "Back to workout sessions", workout_sessions_path %>
+  <%= link_to "Show this workout session", buddy_workout_session_path %>
+</div>
+
+<div>
+  <%= link_to "Back to workout sessions", buddy_workout_sessions_path %>
 </div>

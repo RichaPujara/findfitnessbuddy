@@ -1,57 +1,66 @@
 class WorkoutSessionsController < ApplicationController
-  # skip_before_action :authenticate_user!, only: [:index, :show]
-
   before_action :set_workout_session, only: %i[ show edit update destroy ]
+  before_action :get_buddy, only: %i[ new index ]
 
-  # GET /workout_sessions or /workout_sessions.json
+  # GET /buddies/:buddy_id/workout_sessions
   def index
-    @workout_sessions = WorkoutSession.all
+    if params[:buddy_id].present?
+      @workout_sessions = WorkoutSession.find_by(buddy_id: params[:buddy_id].to_i)
+      #@workout_sessions = WorkoutSession.where(:buddies_id => params[:id])
+      puts "Workout sessions: #{@workout_sessions}"
+    else
+      @workout_sessions = WorkoutSession.all
+    end
+    # if buddy_id.present?
+    #   @workout_sessions = WorkoutSession.find_by_buddies_id(params(:buddies_id))
+    # elsif params[:buddies_id].present?
+    #   @workout_sessions = WorkoutSession.where(:buddies_id => params[:id])
+    # else
+    #   @workout_sessions = WorkoutSession.all
+    # end
   end
 
-  # GET /workout_sessions/1 or /workout_sessions/1.json
+  # GET /buddies/:buddy_id/workout_sessions/:id
   def show
-    @booking = @workout_session.bookings.build
   end
 
-  # GET /workout_sessions/new
+  # GET /buddies/:buddy_id/workout_sessions/new
   def new
-    @workout_session = WorkoutSession.new
+    puts "Params: #{params}"
+    puts "Buddy: #{@buddy}"
+    #@workout_session = @buddy.workout_sessions.build
   end
 
-  # GET /workout_sessions/1/edit
+  # GET /buddies/:buddy_id/workout_sessions/:id/edit
   def edit
   end
 
-  # POST /workout_sessions or /workout_sessions.json
+  # POST /buddies/:buddy_id/workout_sessions
   def create
-    @workout_session = WorkoutSession.new(workout_session_params)
+    @buddy = Buddy.find(params[:buddy_id])
+    @workout_session = @buddy.workout_sessions.create(workout_session_params)
     
     respond_to do |format|
       if @workout_session.save
-        current_user.add_role :creator, @workout_session
-        format.html { redirect_to workout_session_url(@workout_session), notice: "Workout session was successfully created." }
-        format.json { render :show, status: :created, location: @workout_session }
+        format.html { redirect_to buddy_workout_session_path(@workout_session, @workout_session.id), notice: "Workout session was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @workout_session.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /workout_sessions/1 or /workout_sessions/1.json
+  # PATCH/PUT /buddies/:buddy_id/workout_sessions/:id
   def update
     respond_to do |format|
       if @workout_session.update(workout_session_params)
-        format.html { redirect_to @workout_session.business_profile, notice: "Workout session was successfully updated." }
-        format.json { render :show, status: :ok, location: @workout_session }
+        format.html { redirect_to @workout_session.buddy, notice: "Workout session was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @workout_session.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /workout_sessions/1 or /workout_sessions/1.json
+  # DELETE /buddies/:buddy_id/workout_sessions/:id
   def destroy
     @workout_session.destroy
 
@@ -67,8 +76,12 @@ class WorkoutSessionsController < ApplicationController
       @workout_session = WorkoutSession.find(params[:id])
     end
 
+    def get_buddy
+      @buddy = Buddy.find(params[:buddy_id])
+    end
+
     # Only allow a list of trusted parameters through.
     def workout_session_params
-      params.require(:workout_session).permit(:start_time, :duration, :workout_type, :date, :workout_category, :description, :fees, :difficulty_level, :business_profile_id)
+      params.require(:workout_session).permit(:name, :date, :duration, :workout_type, :workout_category, :description, :fees, :difficulty_level, :buddy_id)
     end
 end

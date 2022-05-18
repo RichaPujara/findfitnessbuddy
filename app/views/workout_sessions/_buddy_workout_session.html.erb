@@ -1,0 +1,10 @@
+<div id="workout_sessions">
+  <% @buddy.workout_sessions.each do |workout_session| %>
+    <h3><%= "Title: #{workout_session.name}" %></h3>
+    <p>
+    <%= "Schedule: #{workout_session.date}" %></p><p>
+    <%= "Workout Category: #{workout_session.workout_category}" %></p>
+    <p><%= "Difficulty Level: #{workout_session.difficulty_level}" %></p>
+    <div><%= link_to "More details", buddy_workout_session_url(workout_session, workout_session.id)%> </div>
+  <% end %>
+</div>
