@@ -19,5 +19,11 @@
     <strong>Location: </strong>
     <%= buddy.location %>
   </p>
+  
+  <% if buddy.avatar.attached? %>
+  <p>
+    <%= cl_image_tag buddy.key, transformation: ["media_lib_thumb"], cloud_name: 'richapujara' %>
+  </p>
+  <% end %>
 
 </div>

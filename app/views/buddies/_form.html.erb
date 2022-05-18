@@ -13,30 +13,46 @@
 
   <div>
   
+  <fieldset class="mb-2">
     <%= form.hidden_field :user_id, value: current_user.id %>
-  </div>
-
-  <div>
+  </fieldset>
+  
+  <fieldset class="mb-2">
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
-  </div>
+  </fieldset>
 
-  <div>
+  <fieldset class="mb-2">
     <%= form.label :description, style: "display: block" %>
     <%= form.text_area :description %>
-  </div>
+  </fieldset>
 
-  <div>
+  <fieldset class="mb-2">
     <%= form.label :qualification, style: "display: block" %>
     <%= form.text_field :qualification %>
-  </div>
+  </fieldset>
 
-  <div>
+  <fieldset class="mb-2">
     <%= form.label :location, style: "display: block" %>
     <%= form.text_field :location %>
-  </div>
+ </fieldset>
 
-  <div>
-    <%= form.submit %>
-  </div>
+  <fieldset class="mb-2">
+    <%= form.label :avatar, style: "display: block" %>
+    <%= form.file_field :avatar %>
+  </fieldset>
+
+  <% if @buddy.avatar.attached? %>
+
+  <fieldset class="mb-2">
+      <%= cl_image_tag    buddy.key, transformation: ["media_lib_thumb"], cloud_name: 'richapujara' %>
+  </fieldset>
+
+    <% end %>
+
+  <fieldset class="mb-2">
+      <%= form.submit %>
+  </fieldset>
+  
 <% end %>
+

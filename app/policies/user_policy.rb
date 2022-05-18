@@ -7,10 +7,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    @user.has_role? :admin
-  end
-
-  def show?
-    @user.has_any_role? :admin, :owner
-  end
+      @user.has_role? :admin
+    end
 end

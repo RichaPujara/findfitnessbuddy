@@ -1,11 +1,8 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user! 
-    def index
-        @users = User.all
-        authorize @users
-    end
-    def show
-        @user = User.find(params[:id])
-        authorize @user
-    end
+  
+  def index
+    @users = User.order(created_at: :desc)
+    authorize @users
+  end
+
 end

@@ -1,6 +1,7 @@
 class BuddiesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   before_action :set_buddy, only: %i[ show edit update destroy]
+  before_action :check_auth, only: %i[ edit update destroy ]
 
   # GET /buddies
   def index
@@ -23,34 +24,31 @@ class BuddiesController < ApplicationController
   # POST /buddies
   def create
     @buddy = Buddy.new(buddy_params)
-
-    respond_to do |format|
+    
+    current_user.add_role :fitness_buddy
+   
       if @buddy.save
-        format.html { redirect_to buddy_url(@buddy), notice: "You are now setup as a Fitness Buddy!" }
+        current_user.add_role :buddy_profile_owner, @buddy
+        redirect_to buddy_url(@buddy), notice: "You are now setup as a Fitness Buddy!" 
       else
-        format.html { render :new, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity 
       end
-    end
   end
 
   # PATCH/PUT /buddies/1
   def update
-    respond_to do |format|
       if @buddy.update(buddy_params)
-        format.html { redirect_to buddy_url(@buddy), notice: "Your changes were saved successfully." }
+          redirect_to buddy_url(@buddy), notice: "Your changes were saved successfully." 
       else
-        format.html { render :edit, status: :unprocessable_entity }
+          render :edit, status: :unprocessable_entity 
       end
-    end
   end
 
   # DELETE /buddies/1
   def destroy
     @buddy.destroy
-
-    respond_to do |format|
-      format.html { redirect_to root_url, notice: "You were successfully removed as a Fitness Buddy." }
-    end
+    current_user.remove_role :fitness_buddy
+    redirect_to root_url, notice: "You were successfully removed as a Fitness Buddy." 
   end
 
   private
@@ -61,7 +59,10 @@ class BuddiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def buddy_params
-      params.require(:buddy).permit(:user_id, :name, :description, :location, :qualification)
+      params.require(:buddy).permit(:user_id, :name, :description, :location, :qualification, :avatar)
     end
 
+    def check_auth
+      authorize @buddy 
+    end
 end

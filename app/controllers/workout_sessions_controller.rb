@@ -1,7 +1,9 @@
 class WorkoutSessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
+
   before_action :set_workout_session, only: %i[ show edit update destroy ]
   before_action :get_buddy, only: %i[ new index ]
+  before_action :check_auth
 
   # GET /buddies/:buddy_id/workout_sessions
   def index
@@ -27,9 +29,6 @@ class WorkoutSessionsController < ApplicationController
 
   # GET /buddies/:buddy_id/workout_sessions/new
   def new
-    puts "Params: #{params}"
-    puts "Buddy: #{@buddy}"
-    #@workout_session = @buddy.workout_sessions.build
   end
 
   # GET /buddies/:buddy_id/workout_sessions/:id/edit
@@ -41,12 +40,11 @@ class WorkoutSessionsController < ApplicationController
     @buddy = Buddy.find(params[:buddy_id])
     @workout_session = @buddy.workout_sessions.create(workout_session_params)
     
-    respond_to do |format|
-      if @workout_session.save
-        format.html { redirect_to buddy_workout_session_path(@workout_session, @workout_session.id), notice: "Workout session was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @workout_session.save
+      @buddy.user.add_role :trainer, @workout_session
+      redirect_to buddy_workout_session_path(@workout_session, @workout_session.id), notice: "Workout session was successfully created." 
+    else
+      render :new, status: :unprocessable_entity 
     end
   end
 
@@ -85,4 +83,9 @@ class WorkoutSessionsController < ApplicationController
     def workout_session_params
       params.require(:workout_session).permit(:name, :date, :duration, :workout_type, :workout_category, :description, :fees, :difficulty_level, :buddy_id)
     end
+
+    def check_auth
+      authorize WorkoutSession
+    end
+
 end

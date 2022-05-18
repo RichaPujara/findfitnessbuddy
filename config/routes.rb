@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/index', to: 'users#index', as: 'usersindex'
+  
   devise_for :users
   get 'home/index'
   get 'sessions/:session_id/bookings/new', to: 'bookings#new'

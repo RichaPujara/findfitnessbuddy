@@ -1,15 +1,17 @@
 class BookingsController < ApplicationController
-    
-  before_action :set_booking, only: %i[ show edit update destroy ]
 
-  # GET /bookings or /bookings.json
+    before_action :set_booking, only: %i[show edit update destroy ]
+    before_action :check_auth_model, only: [ :create, :new]  
+    before_action :check_auth, only: %i[ show edit destroy update ]  
+    
+  # GET /bookings 
   def index
     @bookings = Booking.all
+    authorize @bookings
   end
 
-  # GET /bookings/1 or /bookings/1.json
+  # GET /bookings/1 
   def show
-    # @user_booking = current_user.bookings.find(params[:id])
   end
 
   # GET /bookings/new
@@ -24,40 +26,24 @@ class BookingsController < ApplicationController
   # POST /bookings or /bookings.json
   def create
     @booking = Booking.new(workout_session_id: params[:workout_session_id], user_id: current_user.id)
-    
-    respond_to do |format|
-      if @booking.save
-        # current_user.add_role :owner, @booking
-        format.html { redirect_to @booking, notice: "Booking was successfully created." }
-        format.json { render :show, status: :created, location: @booking }
-      else
-        # format.html { render :, status: :unprocessable_entity }
-        # format.json { render json: @booking.errors, status: :unprocessable_entity }
-      end
-    end
+    current_user.add_role :trainee, @booking.workout_session
+    redirect_to @booking, notice: "Booking was successfully created."
   end
 
-  # PATCH/PUT /bookings/1 or /bookings/1.json
+  # PATCH/PUT /bookings/1 
   def update
-    respond_to do |format|
       if @booking.update(booking_params)
-        format.html { redirect_to @booking, notice: "Booking was successfully updated." }
-        format.json { render :show, status: :ok, location: @booking }
+        redirect_to @booking, notice: "Booking was successfully updated." 
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity 
       end
-    end
   end
 
-  # DELETE /bookings/1 or /bookings/1.json
+  # DELETE /bookings/1 
   def destroy
+    current_user.remove_role :trainee, @booking
     @booking.destroy
-
-    respond_to do |format|
-      format.html { redirect_to bookings_url, notice: "Booking was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to bookings_url, notice: "Booking was successfully destroyed." 
   end
 
   private
@@ -70,6 +56,15 @@ class BookingsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def booking_params
       params.require(:booking).permit(:booking_approved)
+    end
+
+    # Check if a user is authorized to access the bookings
+    def check_auth_model
+        authorize Booking
+    end
+
+    def check_auth
+        authorize @booking
     end
 
 end
