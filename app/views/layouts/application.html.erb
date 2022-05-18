@@ -24,6 +24,11 @@
             <li class="nav-item">
               <%= link_to 'Fitness Buddies', buddies_path , class: 'nav-link' %>
             </li>
+            <% if user_signed_in? && current_user.bookings %>
+              <li class="nav-item">
+                <%= link_to "My Bookings", "/bookings" , class: 'nav-link' %>
+              </li>
+            <% end %>
             </ul>
           <% if user_signed_in? %>
             <div class="ml-auto btn-toolbar p-3">

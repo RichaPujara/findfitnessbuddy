@@ -1,17 +1,26 @@
 <div id="<%= dom_id booking %>">
+    <div>
   <p>
     <strong>Booking ID</strong>
     <%= booking.id %>
   </p>
 
   <p>
+    <strong>User: </strong>
+    <%= booking.user.first_name %>
+  </p>
+
+  <p>
     <strong>Workout session:</strong>
+    <p><%= booking.workout_session.name %></p>
+    <p>Buddy: <%= booking.workout_session.buddy.name %> </p>
     <%= link_to "Session details", booking.workout_session %>
   </p>
 
   <p>
     <strong>Booking Status:</strong>
-    <%=render plain: booking.booking_approved? ? "Approved" : "Pending" %>
+    <%= booking.booking_status %>
   </p>
-
+    <%= button_to "Cancel booking", booking, method: :delete, data: {turbo: false} %>
+  
 </div>

@@ -1,10 +1,26 @@
-<h1>Editing booking</h1>
+<h1>Edit booking</h1>
+  <div>
+    <strong> Session:</strong> <%= @booking.workout_session.name %> <br>
+    <strong> Booking ID:</strong> <%= @booking.id %> <br>
+    <strong> Fitness Enthusiast</strong> <%= "#{@booking.user.first_name} #{@booking.user.last_name}" %> <br>
+  </div>
 
-<%= render "form", booking: @booking %>
-
-<br>
+  <div> <%= form_with model: @booking do |form| %>
+        <p> "Approve Booking?" </p>
+        <div>
+          
+          <%= form.label :booking_status_true, true %>
+          <%= form.radio_button :booking_status, "true" %>
+          
+          <%= form.label :booking_status_false, "false" %>
+          <%= form.radio_button :booking_status, "false" %>
+        </div>
+        <div>
+          <%= form.submit "Update booking" %>
+        </div>
+        <% end %>
+  </div>
 
 <div>
-  <%= link_to "Show this booking", @booking %> |
-  <%= link_to "Back to bookings", bookings_path %>
+  <%= button_to "Back to bookings", bookings_path %>
 </div>

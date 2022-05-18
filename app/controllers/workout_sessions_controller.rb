@@ -1,4 +1,5 @@
 class WorkoutSessionsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show]
   before_action :set_workout_session, only: %i[ show edit update destroy ]
   before_action :get_buddy, only: %i[ new index ]
 

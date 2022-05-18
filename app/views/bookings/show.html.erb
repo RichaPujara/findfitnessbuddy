@@ -3,8 +3,12 @@
 <%= render @booking %>
 
 <div>
-  <%= link_to "Edit this booking", edit_booking_path(@booking) %> |
+  <%
+=begin%>
+ <%= link_to "Edit this booking", edit_booking_path(@booking) %> | 
+<%
+=end%>
   <%= link_to "Back to bookings", bookings_path %>
-
-  <%= button_to "Destroy this booking", @booking, method: :delete %>
+    <%= link_to "Update booking", edit_booking_path(@booking) %>
+  <%= button_to "Destroy this booking", @booking, method: :delete, data: {turbo: false} %>
 </div>

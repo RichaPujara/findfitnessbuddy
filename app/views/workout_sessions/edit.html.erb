@@ -1,9 +1,7 @@
 <h1>Update workout session</h1>
 
 <%= form_with model: @workout_session do |form| %>
-  <%
-=begin%>
- <% if workout_session.errors.any? %>
+ <% if @workout_session.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(workout_session.errors.count, "error") %> prohibited this workout_session from being saved:</h2>
 
@@ -14,8 +12,7 @@
       </ul>
     </div>
   <% end %> 
-<%
-=end%>
+
 
   <div>
     <%= form.label  :name, "Session Name", style: "display: block" %>

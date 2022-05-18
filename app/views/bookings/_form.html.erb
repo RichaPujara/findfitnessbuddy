@@ -11,12 +11,16 @@
     </div>
   <% end %>
 
-  <div>
+  <%
+=begin%>
+ <div>
     <%= form.hidden_field :user_id, value: current_user.id %>
   
     <%= form.hidden_field :workout_session_id %>
 
-  <div>
+  <div> 
+<%
+=end%>
     <%= form.submit "Create booking" %>
   </div>
 <% end %>
