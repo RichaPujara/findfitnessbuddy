@@ -2,8 +2,9 @@ class BuddyPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.all
+        scope.all
     end
+
   end
 
  # To allow all users to view all buddy profiles 
@@ -20,7 +21,7 @@ class BuddyPolicy < ApplicationPolicy
   # To allow all signed in users to create max of 1 buddy profile 
 
   def create?
-    !@user.has_role?(:fitness_buddy)
+    unless @user.has_role?(:fitness_buddy)
   end
 
   def new?
@@ -30,7 +31,7 @@ class BuddyPolicy < ApplicationPolicy
   # To allow only the profile owner or admin users to edit/update the specific buddy profile.
 
   def update?
-    @user.has_any_role?(:admin, :buddy_profile_owner)
+    @user.has_role? :buddy_profile_owner, @record
   end
 
   def edit?
@@ -42,5 +43,5 @@ class BuddyPolicy < ApplicationPolicy
   def destroy?
     @user.has_any_role?(:admin, :buddy_profile_owner)
   end
-
+end
 end

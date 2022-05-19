@@ -63,6 +63,6 @@ class BuddiesController < ApplicationController
     end
 
     def check_auth
-      authorize @buddy 
+      authorize @buddy
     end
 end

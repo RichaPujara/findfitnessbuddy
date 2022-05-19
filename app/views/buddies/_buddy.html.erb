@@ -1,29 +1,33 @@
 <div id="<%= dom_id buddy %>">
 
-  <p>
+  <fieldset>
     <strong>Name: </strong>
     <%= buddy.name %>
-  </p>
+  </fieldset>
 
-  <p>
+  <fieldset>
     <strong>Description: </strong>
     <%= buddy.description %>
-  </p>
+  </fieldset>
 
-  <p>
+  <fieldset>
     <strong>Qualification: </strong>
     <%= buddy.qualification %>
-  </p>
+  </fieldset>
 
-  <p>
+  <fieldset>
     <strong>Location: </strong>
     <%= buddy.location %>
-  </p>
-  
+  </fieldset>
+
   <% if buddy.avatar.attached? %>
-  <p>
-    <%= cl_image_tag buddy.key, transformation: ["media_lib_thumb"], cloud_name: 'richapujara' %>
-  </p>
+  <fieldset>
+    <strong>Avatar: </strong>
+  </fieldset>
+  
+ <fieldset>
+    <%= cl_image_tag buddy.avatar.key, transformation: ["media_lib_thumb"], cloud_name: 'richapujara' %>
+  </fieldset>
   <% end %>
 
 </div>
