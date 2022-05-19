@@ -1,9 +1,17 @@
 class BuddyPolicy < ApplicationPolicy
+  attr_reader :user, :record
+
+  def initialize(user, record)
+    @user = user
+    @record = record
+  end
+
+  
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
-    def resolve
-        scope.all
-    end
+    # def resolve
+    #     scope.all
+    # end
 
   end
 
@@ -21,7 +29,7 @@ class BuddyPolicy < ApplicationPolicy
   # To allow all signed in users to create max of 1 buddy profile 
 
   def create?
-    unless @user.has_role?(:fitness_buddy)
+    false if @user.has_role?(:fitness_buddy)
   end
 
   def new?
@@ -41,7 +49,7 @@ class BuddyPolicy < ApplicationPolicy
   # To allow only the profile owner or admin users to delete the buddy profile.
 
   def destroy?
-    @user.has_any_role?(:admin, :buddy_profile_owner)
+    @user.has_role?(:admin) || @user.has_role?(:buddy_profile_owner, @record)
   end
 end
-end
+

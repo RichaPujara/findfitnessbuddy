@@ -2,6 +2,7 @@ class BuddiesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   before_action :set_buddy, only: %i[ show edit update destroy]
   before_action :check_auth, only: %i[ edit update destroy ]
+  before_action :check_auth_model, only: %i[ create new ]
 
   # GET /buddies
   def index
@@ -60,6 +61,10 @@ class BuddiesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def buddy_params
       params.require(:buddy).permit(:user_id, :name, :description, :location, :qualification, :avatar)
+    end
+
+    def check_auth_model
+      authorize Buddy
     end
 
     def check_auth
