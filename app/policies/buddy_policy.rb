@@ -5,8 +5,6 @@ class BuddyPolicy < ApplicationPolicy
     @user = user
     @record = record
   end
-
-  
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # def resolve
@@ -29,7 +27,7 @@ class BuddyPolicy < ApplicationPolicy
   # To allow all signed in users to create max of 1 buddy profile 
 
   def create?
-    false if @user.has_role?(:fitness_buddy)
+    ! (@user.has_role? :fitness_buddy)
   end
 
   def new?
@@ -50,6 +48,21 @@ class BuddyPolicy < ApplicationPolicy
 
   def destroy?
     @user.has_role?(:admin) || @user.has_role?(:buddy_profile_owner, @record)
+  end
+
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      raise NotImplementedError, "You must define #resolve in #{self.class}"
+    end
+
+    private
+
+    attr_reader :user, :scope
   end
 end
 

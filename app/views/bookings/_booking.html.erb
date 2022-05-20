@@ -1,5 +1,5 @@
 <div id="<%= dom_id booking %>">
-    <div>
+
   <p>
     <strong>Booking ID</strong>
     <%= booking.id %>
@@ -21,6 +21,7 @@
     <strong>Booking Status:</strong>
     <%= booking.booking_status %>
   </p>
-    <%= button_to "Cancel booking", booking, method: :delete, data: {turbo: false} %>
+
+  <%= button_to "Cancel booking", booking, method: :delete, data: {turbo: false} %>
   
 </div>

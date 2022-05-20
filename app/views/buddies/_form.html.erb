@@ -12,11 +12,7 @@
   <% end %>
 
   <div>
-  
-  <fieldset class="mb-2">
     <%= form.hidden_field :user_id, value: current_user.id %>
-  </fieldset>
-  
   <fieldset class="mb-2">
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
@@ -45,7 +41,7 @@
   <% if buddy.avatar.attached? %>
 
   <fieldset class="mb-2">
-      <%= cl_image_tag buddy.key, transformation: ["media_lib_thumb"], cloud_name: 'richapujara' %>
+      <%= cl_image_tag buddy.avatar.key, transformation: ["media_lib_thumb"], cloud_name: 'richapujara' %>
   </fieldset>
 
     <% end %>

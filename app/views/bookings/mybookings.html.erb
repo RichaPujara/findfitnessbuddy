@@ -1,0 +1,9 @@
+<h2> My Bookings </h2>
+<div>
+
+    <%= @mybookings.each do |booking| %>
+            <p>
+                <%= render booking %>
+            </p>
+    <% end %>
+</div>

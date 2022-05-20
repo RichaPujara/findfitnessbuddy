@@ -10,10 +10,12 @@ class WorkoutSession < ApplicationRecord
     has_many :workout_session_trainers, -> { where(roles: {name: :trainer}) }, through: :roles, class_name: 'User', source: :users
 
     validates :name, presence: true
-    validates :date, presence: true
+    validates :date, presence: true, comparison: { greater_than: Date.today }
     validates :duration, presence: true
     validates :workout_type, presence: true
     validates :workout_category, presence: true
-    validates :fees, presence: true
+    validates :fees, presence: true, numericality: {minimum: 0}
     validates :difficulty_level, presence: true
+
+    
 end

@@ -1,23 +1,43 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @buddy %>
+ <%= render @buddy %> 
+
 
 <div>
-  <p> <strong> Workout Sessions: </strong> </p>
+  <p> 
+    <strong > Workout Sessions: </strong> 
+  </p>
   <div id="workout_sessions">
-  <% @buddy.workout_sessions.each do |workout_session| %>
-    <h3><%= "Title: #{workout_session.name}" %></h3>
-    <p>
-    <%= "Schedule: #{workout_session.date}" %></p><p>
-    <%= "Workout Category: #{workout_session.workout_category}" %></p>
-    <p><%= "Difficulty Level: #{workout_session.difficulty_level}" %></p>
-    <p><%= link_to "More details", buddy_workout_session_url(workout_session, workout_session.id)%> </p>
+    <div>
+    <% @buddy.workout_sessions.each do |workout_session| %>
+      <h3><%= "Title: #{workout_session.name}" %></h3>
+        <p>
+          <%= "Schedule: #{workout_session.date}" %>
+        </p>
+        <p>
+          <%= "Workout Category: #{workout_session.workout_category}" %>
+          </p>
+        <p>
+          <%= "Difficulty Level: #{workout_session.difficulty_level}" %>
+        </p>
+        <p>
+          <%= link_to "More details", buddy_workout_session_url(workout_session, workout_session.id)%> 
+        </p>
+    <% end %>
+    </div>
+  <button type="button" class="btn btn-default" > <%= link_to "Back", :back %> </Button >
+  <br>
+    
+    <% if policy(WorkoutSession).create? %>
+      <%= link_to "Create Workout Session", new_buddy_workout_session_path(@buddy) ,data: {turbo: false}, class: "btn btn-primary" %> 
     <% end %>
 
-  <%= link_to "Create Workout Session", new_buddy_workout_session_path(@buddy) %> |
+    <% if policy(WorkoutSession).edit? %>
+      <%= link_to "Edit", edit_buddy_path(@buddy), data: {turbo: false}, class: "btn btn-info" %> 
+    <% end %>
 
-  <%= link_to "Edit", edit_buddy_path(@buddy) %> |
-  <%= link_to "Back", :back %>
-
-  <%= button_to "Delete", @buddy, method: :delete %>
-</div>
+    <% if policy(WorkoutSession).destroy? %>
+      <%= button_to "Delete", @buddy, method: :delete, data: {turbo: false}, class: "btn btn-danger" %>
+    <% end %>
+  
+  </div>

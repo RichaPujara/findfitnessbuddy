@@ -1,8 +1,9 @@
 <h2> All Bookings </h2>
 <div>
+
     <%= @bookings.each do |booking| %>
-        <p>
-            <%= render booking %>
-        </p>
+            <p>Fitness Enthusiast: <%= booking.user.first_name %><br>
+                <%= render booking %>
+            </p>
     <% end %>
 </div>

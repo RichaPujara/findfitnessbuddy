@@ -1,4 +1,11 @@
-<h1>Update workout session</h1>
+
+
+
+<%= render partial "form" %>
+
+<%
+=begin%>
+ <h1>Update workout session</h1>
 
 <%= form_with model: @workout_session do |form| %>
  <% if @workout_session.errors.any? %>
@@ -66,7 +73,9 @@
   <div>
     <%= form.submit %>
   </div>
-<% end %>
+<% end %> 
+<%
+=end%>
 
 <br>
 

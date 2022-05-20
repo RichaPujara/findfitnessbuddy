@@ -1,33 +1,37 @@
-<div id="<%= dom_id buddy %>">
+<div id="<%= dom_id buddy %>" class= "justify-content-md-center">
+  <div class= "justify-content-md-center">
+    <% if buddy.avatar.attached? %>
+        <%= cl_image_tag buddy.avatar.key, cloud_name: 'richapujara', class: "img-thumbnail rounded mx-auto d-block" %>
+      <% else %>
+        <%= cl_image_tag("avatar-icon-vector-female-user-person-profile-symbol-in-circle-flat-vector-id960699238_i0poko.jpg") %>
+      <% end %>
 
-  <fieldset>
-    <strong>Name: </strong>
-    <%= buddy.name %>
-  </fieldset>
+  </div>
+  <div class= "align-elements-content-md-center">
+      <fieldset>
+        <strong>Name: </strong>
+        <%= buddy.name %>
+      </fieldset>
 
-  <fieldset>
-    <strong>Description: </strong>
-    <%= buddy.description %>
-  </fieldset>
+      <fieldset>
+        <strong>Description: </strong>
+        <%= buddy.description %>
+      </fieldset>
 
-  <fieldset>
-    <strong>Qualification: </strong>
-    <%= buddy.qualification %>
-  </fieldset>
+      <fieldset>
+        <strong>Qualification: </strong>
+        <%= buddy.qualification %>
+      </fieldset>
 
-  <fieldset>
-    <strong>Location: </strong>
-    <%= buddy.location %>
-  </fieldset>
+      <fieldset>
+        <strong>Location: </strong>
+        <%= buddy.location %>
+      </fieldset>
 
-  <% if buddy.avatar.attached? %>
-  <fieldset>
-    <strong>Avatar: </strong>
-  </fieldset>
-  
- <fieldset>
-    <%= cl_image_tag buddy.avatar.key, transformation: ["media_lib_thumb"], cloud_name: 'richapujara' %>
-  </fieldset>
-  <% end %>
+      
+      
+    
+  </div>
 
 </div>
+

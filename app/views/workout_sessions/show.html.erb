@@ -1,26 +1,29 @@
 <p style="color: green"><%= notice %></p>
-
-<%= render @workout_session %>
-<%= link_to "Edit", edit_buddy_workout_session_path(@workout_session.buddy, @workout_session.id) %>
 <div>
-  <%= link_to "back", :back %>
-  <%= button_to "Book Session", workout_session_bookings_path(@workout_session.id), data: {turbo: false} %>
-  <%
-=begin%>
- <%= link_to "Book Session", "sessions/#{@workout_session.id}/bookings/new" %> 
-<%
-=end%>
-  
-  
-  <%
-=begin%>
- <%= render "bookings/form", booking: @booking %>
-  
-  <%= link_to "Edit this workout session", edit_workout_session_path(@workout_session) %> |
-  <%= link_to "Back to workout sessions", workout_sessions_path %>
+  <%= render @workout_session %>
+  </div>
+  <% if policy(WorkoutSession).edit? %>
+    <div>
+      <%= link_to "Edit", edit_buddy_workout_session_path(@workout_session.buddy, @workout_session.id) %>
+    </div>  
+  <% end %>
+<div>
 
-  <%= button_to "Destroy this workout session", @workout_session, method: :delete %> 
-<%
-=end%>
-  
+    <% if user_signed_in? && policy(Booking).create? %> 
+    <div>
+      <%= button_to "Book Session", workout_session_bookings_path(@workout_session.id),data: {turbo: false}%>
+    </div>
+    <% end %>
+
+  <% if user_signed_in? && policy(WorkoutSession).edit? %>
+    <div>
+      <%= link_to "Edit this workout session", edit_workout_session_path(@workout_session), class: "btn btn-warning" %>  
+      <%= button_to "Destroy this workout session", @workout_session, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete '#{@workout_session.name}' ?" } } %> 
+    </div>
+  <% end %>
+  <br>
+    <div>
+      <%= link_to "Back to workout sessions", :back, class: "btn btn-outline-primary" %>
+
+    </div>  
 </div>

@@ -1,19 +1,17 @@
-<%= form_with model: [@buddy, @buddy.workout_sessions.build ] do |form| %>
-  <%
-=begin%>
- <% if workout_session.errors.any? %>
+
+<%= form_with(model: [@buddy, @buddy.workout_sessions.build], data: {turbo: false}) do |form| %>
+
+ <% if @buddy.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(workout_session.errors.count, "error") %> prohibited this workout_session from being saved:</h2>
+      <h2><%= pluralize(@buddy.errors.count, "error") %> prohibited this workout_session from being saved:</h2>
 
       <ul>
-        <% workout_session.errors.each do |error| %>
+        <% @buddy.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
-  <% end %> 
-<%
-=end%>
+  <% end %>
 
   <div>
     <%= form.label  :name, "Session Name", style: "display: block" %>
@@ -55,16 +53,13 @@
     <%= form.select :difficulty_level, %i[Beginner Intermediate Expert] %>
   </div>
 
-  <%
-=begin%>
- <div>
-    <%= current_buddy_id() %>
-    <%= form.hidden_field :buddies_id, value: current_buddy_id() %>
-  </div> 
-<%
-=end%>
-
   <div>
     <%= form.submit %>
   </div>
 <% end %>
+
+<br>
+
+<div>
+  <%= link_to "Back to workout sessions", buddy_workout_sessions_path %>
+</div>

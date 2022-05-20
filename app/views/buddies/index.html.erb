@@ -2,16 +2,35 @@
 
 <h1>Fitness Buddies</h1>
 
-<div id="buddies">
-  <% @buddies.each do |buddy| %>
-    <%= render buddy %>
-    <p>
-      <%= link_to "#{buddy.name}", buddy %>
-    </p>
-  <% end %>
+<div>
+  <div class="container">
+    <div class="row row-cols-3">
+      <% @buddies.each do |buddy| %>
+        <div class="card enable-shadows" style="width: 18rem;">
+          <div class="card-header">
+          <% if buddy.avatar.attached? %>
+            <%= cl_image_tag buddy.avatar.key, cloud_name: 'richapujara', class: "card-img-top" %>
+          <% else %>
+            <%= cl_image_tag("avatar-icon-vector-female-user-person-profile-symbol-in-circle-flat-vector-id960699238_i0poko.jpg", :height=>180, :crop=>"scale") %>
+          <% end %>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"> <%= buddy.name %></h5>
+            <p class="card-text"><%= buddy.description %> <br> 
+              <%= buddy.location %>
+            </p>
+            <p>
+            <%= link_to "View more details", buddy, class: "btn btn-primary" %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
 <div>
 <p> Do you wanna Be Someone else's Fitness Buddy?</p>
-
-<%= link_to "Register here", new_buddy_path %>
+<%= if policy(Buddy).create? %>
+  <%= link_to "Register here", new_buddy_path,  class: "btn btn-primary" %>
+<% end %>
 </div>

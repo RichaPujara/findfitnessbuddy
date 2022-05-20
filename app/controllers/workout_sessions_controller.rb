@@ -3,32 +3,30 @@ class WorkoutSessionsController < ApplicationController
 
   before_action :set_workout_session, only: %i[ show edit update destroy ]
   before_action :get_buddy, only: %i[ new index ]
-  before_action :check_auth
+  before_action :check_auth, only: %i[ edit, update, destroy]
 
   # GET /buddies/:buddy_id/workout_sessions
   def index
     if params[:buddy_id].present?
       @workout_sessions = WorkoutSession.find_by(buddy_id: params[:buddy_id].to_i)
-      #@workout_sessions = WorkoutSession.where(:buddies_id => params[:id])
-      puts "Workout sessions: #{@workout_sessions}"
     else
       @workout_sessions = WorkoutSession.all
     end
-    # if buddy_id.present?
-    #   @workout_sessions = WorkoutSession.find_by_buddies_id(params(:buddies_id))
-    # elsif params[:buddies_id].present?
-    #   @workout_sessions = WorkoutSession.where(:buddies_id => params[:id])
-    # else
-    #   @workout_sessions = WorkoutSession.all
-    # end
   end
 
   # GET /buddies/:buddy_id/workout_sessions/:id
   def show
   end
 
+  def mysessions
+    @mysessions = current_user.buddy.workout_sessions
+    authorize @mysessions if @mysessions
+  end
+
   # GET /buddies/:buddy_id/workout_sessions/new
   def new
+    @buddy = Buddy.find(params[:buddy_id])
+    @workout_session = @buddy.workout_sessions.new
   end
 
   # GET /buddies/:buddy_id/workout_sessions/:id/edit
@@ -38,7 +36,10 @@ class WorkoutSessionsController < ApplicationController
   # POST /buddies/:buddy_id/workout_sessions
   def create
     @buddy = Buddy.find(params[:buddy_id])
-    @workout_session = @buddy.workout_sessions.create(workout_session_params)
+    @workout_session = @buddy.workout_sessions.create(workout_session_params,)
+    # @workout_session = WorkoutSession.new(buddy_id: params[:buddy_id],workout_session_params)
+
+    # @booking = Booking.new(workout_session_id: params[:workout_session_id], user_id: current_user.id)
     
     if @workout_session.save
       @buddy.user.add_role :trainer, @workout_session
@@ -50,23 +51,20 @@ class WorkoutSessionsController < ApplicationController
 
   # PATCH/PUT /buddies/:buddy_id/workout_sessions/:id
   def update
-    respond_to do |format|
+    
       if @workout_session.update(workout_session_params)
-        format.html { redirect_to @workout_session.buddy, notice: "Workout session was successfully updated." }
+        redirect_to @workout_session.buddy, notice: "Workout session was successfully updated." 
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity
       end
-    end
+    
   end
 
   # DELETE /buddies/:buddy_id/workout_sessions/:id
   def destroy
     @workout_session.destroy
-
-    respond_to do |format|
-      format.html { redirect_to workout_sessions_url, notice: "Workout session was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to workout_sessions_url, notice: "Workout session was successfully destroyed." 
+     
   end
 
   private
@@ -81,11 +79,11 @@ class WorkoutSessionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def workout_session_params
-      params.require(:workout_session).permit(:name, :date, :duration, :workout_type, :workout_category, :description, :fees, :difficulty_level, :buddy_id)
+      params.require(:workout_session).permit(:name, :date, :duration, :workout_type, :workout_category, :description, :fees, :difficulty_level)
     end
 
     def check_auth
-      authorize WorkoutSession
+      authorize @workout_session
     end
 
 end
