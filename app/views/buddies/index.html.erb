@@ -3,8 +3,8 @@
 <h1>Fitness Buddies</h1>
 
 <div>
-  <div class="container">
-    <div class="row row-cols-3">
+  <div class="container" >
+    <div class="row row-cols-*" style="margin = auto; width= 100%">
       <% @buddies.each do |buddy| %>
         <div class="card enable-shadows" style="width: 18rem;">
           <div class="card-header">
@@ -29,8 +29,9 @@
   </div>
 </div>
 <div>
+
+<% if policy(Buddy).create? %>
 <p> Do you wanna Be Someone else's Fitness Buddy?</p>
-<%= if policy(Buddy).create? %>
   <%= link_to "Register here", new_buddy_path,  class: "btn btn-primary" %>
 <% end %>
 </div>

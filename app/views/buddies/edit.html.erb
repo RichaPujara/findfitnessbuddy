@@ -5,9 +5,6 @@
 <br>
 
 <div>
-  <%= link_to "Show my Fitness Buddy Profile", @buddy %> 
-</div>
-
-<div>
-  <%= link_to "Back to all Fitness Buddies' profile", buddies_path %>
+  <%= link_to "Show my Fitness Buddy Profile", buddy_path(@buddy), class: "btn btn-primary" %>
+  <%= link_to "Back to all Fitness Buddies' profile", buddies_path, class: "btn btn-primary" %>
 </div>

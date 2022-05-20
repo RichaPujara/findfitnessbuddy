@@ -1,8 +1,19 @@
 <h1> All users </h1>
 <div>
-    <% @users.each do |user| %>
-        <strong> Name: </strong> <%= "#{user.first_name} #{user.last_name}" %> <br>
-        <strong> Email: </strong> <%= "#{user.email}" %> <br>
-        <strong> Roles: </strong> <%= "#{user.roles.pluck(:name)}" %><br>
-    <% end %>
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+        </thead>
+        <tbody>
+            <% @users.each do |user| %>
+            <tr>
+                <td> <strong> Name: </strong> <%= "#{user.first_name} #{user.last_name}" %></td> 
+                <td> <strong> Email: </strong> <%= "#{user.email}" %> </td>
+                <td> <strong> Roles: </strong> <%= "#{user.roles.distinct.pluck(:name)}" %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
 </div>

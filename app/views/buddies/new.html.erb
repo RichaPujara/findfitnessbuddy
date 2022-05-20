@@ -2,12 +2,4 @@
 
 <%= render "form", buddy: @buddy %>
 
-<br>
-
-<%
-=begin%>
- <div>
-  <%= link_to "Back to business profiles", business_profiles_path %>
-</div> 
-<%
-=end%>
+<%= link_to "Back", buddies_path, class: "btn btn-primary" %>

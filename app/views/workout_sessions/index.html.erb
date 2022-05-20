@@ -9,9 +9,10 @@
           <h6 class="card-subtitle mb-2 text-muted"><%= "Workout Category: #{workout_session.workout_category}" %></h6>
           <p class="card-text"><%= "Schedule: #{workout_session.date}" %></p>
           <p class="card-text"><%= "Duration: #{workout_session.duration} minutes" %></p>
-          <%= link_to "More details", buddy_workout_session_url(workout_session, workout_session.id)%>
+          <%= link_to "More details", buddy_workout_session_url(@buddy, workout_session.id)%>
       </div>
     </div>  
+    <br>
   <% end %>
 </div>
 

@@ -1,6 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Workout sessions</h1>
+<div class="">
 <div id="workout_sessions" class: ''>
   <% @mysessions.each do |workout_session| %>
     <div class="card" style="width: 18rem;">
@@ -9,11 +10,12 @@
           <h6 class="card-subtitle mb-2 text-muted"><%= "Workout Category: #{workout_session.workout_category}" %></h6>
           <p class="card-text"><%= "Schedule: #{workout_session.date}" %></p>
           <p class="card-text"><%= "Duration: #{workout_session.duration} minutes" %></p>
-          <%= link_to "More details", buddy_workout_session_url(workout_session, workout_session.id)%>
+          <%= link_to "More details", buddy_workout_session_url(@buddy, workout_session.id)%>
+          <%= link_to "View Participants", participants_url(@buddy, workout_session.id) %>
       </div>
     </div>  
   <% end %>
 </div>
 
 
-<%= link_to "Create new workout session", new_buddy_workout_session_path(current_user.buddy) %>
+<%= link_to "Create new workout session", new_buddy_workout_session_path(current_user.buddy), class: "btn btn-primary" %>

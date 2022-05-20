@@ -26,7 +26,7 @@ class WorkoutSessionPolicy < ApplicationPolicy
   # To allow all registered fitness buddies to create workout sessions
 
   def create?
-    @user.has_role? :fitness_buddy 
+    @user.has_role?(:admin) 
   end
 
   def new?

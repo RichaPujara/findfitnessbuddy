@@ -1,27 +1,43 @@
-<div id="<%= dom_id booking %>">
+<div id="<%= dom_id booking %>" class= "">
+<table class="table table-striped table-bordered table-sm">
+  
+  <tbody>
+  <tr>
+    <td><strong>Booking ID</strong></td>
+    <td><%= booking.id %></td>
+  </tr>
 
-  <p>
-    <strong>Booking ID</strong>
-    <%= booking.id %>
-  </p>
+  <tr>
+    <td><strong>User: </strong></td>
+    <td><%= booking.user.first_name %></td>
+  </tr>
 
-  <p>
-    <strong>User: </strong>
-    <%= booking.user.first_name %>
-  </p>
+  <tr>
+    <td><strong>Workout session:</strong></td>
+    <td><%= booking.workout_session.name %></td>
+  </tr>
+  
+  <tr>
+    <td><strong>Booking Status:</strong>
+    <td><%= booking.booking_status %></td>
+  </tr>
 
-  <p>
-    <strong>Workout session:</strong>
-    <p><%= booking.workout_session.name %></p>
-    <p>Buddy: <%= booking.workout_session.buddy.name %> </p>
-    <%= link_to "Session details", booking.workout_session %>
-  </p>
+  <tr>
+    <td><strong>Buddy:</strong> </td>
+    <td><%= booking.workout_session.buddy.name %> </td>
+    
+  <tr>
+    <td><%= link_to "Session details", booking.workout_session %></td>
+    <td><%= button_to "Cancel this booking", booking, method: :delete, data: {turbo: false} %></td>
+  </tr>
 
-  <p>
-    <strong>Booking Status:</strong>
-    <%= booking.booking_status %>
-  </p>
-
-  <%= button_to "Cancel booking", booking, method: :delete, data: {turbo: false} %>
+   <div>
+      
+    </div>
+  
+</table>
+  <% if policy(Booking).destroy? %>
+   
+  <% end %>
   
 </div>

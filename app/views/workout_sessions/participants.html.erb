@@ -1,0 +1,28 @@
+<H1> <%= @workout_session.name %> </h1>
+<div>
+    <p><strong> Fitness Buddy </strong></p>
+    <p><%= @buddy.name %></p>
+    </div>
+<div class="" style="colour: --pink">
+    <strong>participant's list: </strong>
+</div>
+<table class="table table-striped">
+    <thead>
+        <th> Sr. Number </th>
+        <th> Trainee Name <th>
+        <th> Contact Number </th>
+    </thead>
+    <tbody>
+        <% sr_number = 1 %>
+        <% @workout_session.trainees.each do |trainee| %>
+            <tr>
+            <td><%= sr_number %></td>
+            <td><%= " #{trainee.first_name} #{trainee.last_name}" %></td>
+            <td><%= " #{trainee.contact_number}"%> </td>
+            </tr>
+            <% sr_number +=1 %>
+        <% end %>
+    </body>
+</table>
+
+<% link_to "Back", :back, class: "btn btn-primary" %>

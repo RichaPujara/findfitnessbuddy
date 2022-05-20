@@ -1,8 +1,8 @@
 class WorkoutSessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
 
-  before_action :set_workout_session, only: %i[ show edit update destroy ]
-  before_action :get_buddy, only: %i[ new index ]
+  before_action :set_workout_session, only: %i[ show edit update destroy participants]
+  before_action :get_buddy, only: %i[ new index create participants]
   before_action :check_auth, only: %i[ edit, update, destroy]
 
   # GET /buddies/:buddy_id/workout_sessions
@@ -16,10 +16,15 @@ class WorkoutSessionsController < ApplicationController
 
   # GET /buddies/:buddy_id/workout_sessions/:id
   def show
+    puts "ID 1 #{@workout_session.buddy_id}"
+    puts "ID 2 #{current_user.buddy.id}"
+
+    @booking = Booking.where("user_id = ? and workout_session_id = ?", current_user.id, params[:id]).first
   end
 
   def mysessions
-    @mysessions = current_user.buddy.workout_sessions
+    @buddy = current_user.buddy
+    @mysessions = @buddy.workout_sessions
     authorize @mysessions if @mysessions
   end
 
@@ -31,19 +36,19 @@ class WorkoutSessionsController < ApplicationController
 
   # GET /buddies/:buddy_id/workout_sessions/:id/edit
   def edit
+    @buddy = Buddy.find(@workout_session.buddy_id)
   end
 
   # POST /buddies/:buddy_id/workout_sessions
   def create
-    @buddy = Buddy.find(params[:buddy_id])
-    @workout_session = @buddy.workout_sessions.create(workout_session_params,)
+    @workout_session = @buddy.workout_sessions.create(workout_session_params)
     # @workout_session = WorkoutSession.new(buddy_id: params[:buddy_id],workout_session_params)
 
     # @booking = Booking.new(workout_session_id: params[:workout_session_id], user_id: current_user.id)
     
     if @workout_session.save
       @buddy.user.add_role :trainer, @workout_session
-      redirect_to buddy_workout_session_path(@workout_session, @workout_session.id), notice: "Workout session was successfully created." 
+      redirect_to buddy_workout_session_path(@buddy, @workout_session.id), notice: "Workout session was successfully created." 
     else
       render :new, status: :unprocessable_entity 
     end
@@ -51,9 +56,8 @@ class WorkoutSessionsController < ApplicationController
 
   # PATCH/PUT /buddies/:buddy_id/workout_sessions/:id
   def update
-    
       if @workout_session.update(workout_session_params)
-        redirect_to @workout_session.buddy, notice: "Workout session was successfully updated." 
+        redirect_to buddy_workout_session_path(current_user.buddy, @workout_session.id), notice: "Workout session was successfully updated." 
       else
         render :edit, status: :unprocessable_entity
       end
@@ -63,8 +67,12 @@ class WorkoutSessionsController < ApplicationController
   # DELETE /buddies/:buddy_id/workout_sessions/:id
   def destroy
     @workout_session.destroy
-    redirect_to workout_sessions_url, notice: "Workout session was successfully destroyed." 
+    redirect_to buddy_workout_sessions_path(current_user.buddy), notice: "Workout session was successfully destroyed." 
      
+  end
+
+  def participants
+    @traineeids = @workout_session.trainees.pluck(:id)
   end
 
   private

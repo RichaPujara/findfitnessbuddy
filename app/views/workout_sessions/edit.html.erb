@@ -1,11 +1,4 @@
-
-
-
-<%= render partial "form" %>
-
-<%
-=begin%>
- <h1>Update workout session</h1>
+<h1>Update workout session</h1>
 
 <%= form_with model: @workout_session do |form| %>
  <% if @workout_session.errors.any? %>
@@ -61,28 +54,14 @@
     <%= form.select :difficulty_level, %i[Beginner Intermediate Expert] %>
   </div>
 
-  <%
-=begin%>
- <div>
-    <%= current_buddy_id() %>
-    <%= form.hidden_field :buddies_id, value: current_buddy_id() %>
-  </div> 
-<%
-=end%>
-
   <div>
     <%= form.submit %>
   </div>
 <% end %> 
-<%
-=end%>
 
 <br>
 
 <div>
-  <%= link_to "Show this workout session", buddy_workout_session_path %>
-</div>
-
-<div>
-  <%= link_to "Back to workout sessions", buddy_workout_sessions_path %>
+  <%= link_to "Show this workout session", buddy_workout_session_path(@buddy, @workout_session.id), class: "btn btn-primary" %>
+  <%= link_to "Back to workout sessions", buddy_workout_sessions_path(@buddy), class: "btn btn-primary" %>
 </div>

@@ -46,15 +46,25 @@ class BuddiesController < ApplicationController
 
   # DELETE /buddies/1
   def destroy
-    @buddy.destroy
-    current_user.remove_role :fitness_buddy
-    redirect_to root_url, notice: "You were successfully removed as a Fitness Buddy." 
+    puts "Buddy: #{@buddy}"
+    puts "Buddy: #{@buddy.name}"
+    puts "Buddy: #{@buddy.id}"
+
+    if @buddy.destroy
+      redirect_to root_url, notice: "You were successfully removed as a Fitness Buddy" 
+    else
+      render :edit, status: :unprocessable_entity 
+    end
   end
 
   private
   # Use callbacks to share common setup or constraints between actions.
     def set_buddy
-      @buddy = Buddy.find(params[:id])
+      if params[:id].present?
+        @buddy = Buddy.find(params[:id])
+      else
+        @buddy = Buddy.find(params[:buddy_id])
+      end
     end
 
     # Only allow a list of trusted parameters through.
