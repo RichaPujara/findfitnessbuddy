@@ -52,7 +52,7 @@
             <div class="ml-auto btn-toolbar p-3">
               <%= link_to "Profile Update", edit_user_registration_path, class: 'nav-link' %>
             </div > 
-            <% if policy(Buddy).edit? || !current_user.buddy.nil? %>
+            <% if !current_user.buddy.nil? %>
                 <div class="ml-auto btn-toolbar p-3">
                   <%= link_to "Buddy Profile Update", edit_buddy_path(current_user.buddy), class: 'nav-link' %>
                 </div > 
