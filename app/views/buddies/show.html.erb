@@ -3,8 +3,9 @@
 <div class= "align-elements-content-md-center">
   
   <h3>Workout sessions</h3> 
-  <div class="container " >
-    <div class="row row-cols-*" style="margin = auto; width= 100%">
+  <% if @buddy.workout_sessions.any? %>
+    <div class="container " >
+      <div class="row row-cols-*" style="margin = auto; width= 100%">
         <% @buddy.workout_sessions.each do |workout_session| %>
           <div class="card" style="width: 18rem;">
             <div class="card-body">
@@ -20,7 +21,11 @@
           <br>
         <% end %>
       </div>
-  </div>
+    </div>
+  <% else %>
+    <p><%= @buddy.name%> has no workout sessions currently. Please check back later</p>
+  <% end %>
+
   <br>
 
   <% if policy(WorkoutSession).create? || @buddy.user_id == current_user.id %>

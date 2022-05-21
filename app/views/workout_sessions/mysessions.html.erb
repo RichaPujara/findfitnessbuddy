@@ -1,9 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Workout sessions</h1>
+<h1>Your Workout sessions</h1>
 
 <div class="container " >
-  <% if @mysessions.any? %>>
+  <% if @mysessions.any? %>
     <div class="row row-cols-*" style="margin = auto; width= 100%">
       <% @mysessions.each do |workout_session| %>
         <div class="card" style="width: 18rem;">
