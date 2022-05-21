@@ -9,13 +9,13 @@
   <% end %>
 <div>
 
-<% if user_signed_in? && @booking.nil? %> 
+<% if user_signed_in? && @booking.nil? && ( current_user.buddy.nil? || current_user.buddy.id != @workout_session.buddy_id ) %>
   <div>
     <%= button_to "Book Session", workout_session_bookings_path(@workout_session.id),data: {turbo: false}, class: "btn btn-primary" %>
   </div>
 <% end %>
 
-<% if user_signed_in? && policy(@workout_session).edit? || @current_user.buddy.nil? || current_user.buddy.id != @workout_session.buddy_id %>
+<% if user_signed_in? && policy(@workout_session).edit? %>
   <div>
     <%= link_to "Edit this workout session", edit_workout_session_path(@workout_session), class: "btn btn-primary" %>
     <%= button_to "Destroy this workout session", @workout_session, class: 'btn btn-danger', method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete '#{@workout_session.name}' ?" } } %>

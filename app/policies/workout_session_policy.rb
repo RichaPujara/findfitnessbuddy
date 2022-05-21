@@ -36,7 +36,7 @@ class WorkoutSessionPolicy < ApplicationPolicy
   # To allow only the fitness buddy or admin users to edit/update the specific buddy profile.
 
   def update?
-    @user.has_role?(:trainer, @record)
+    @user.has_role?(:admin) || @user.has_role?(:trainer, @record)
   end
 
   def nottrainer?
@@ -54,7 +54,7 @@ class WorkoutSessionPolicy < ApplicationPolicy
   # To allow only the the fitness buddy or admin users to delete the workout session.
 
   def destroy?
-    @user.has_role?(:admin) || @user.has_role?(:trainer,@record)
+    @user.has_role?(:admin) || @user.has_role?(:trainer, @record)
   end
 
   class Scope

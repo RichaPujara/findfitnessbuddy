@@ -59,7 +59,7 @@ class BookingsController < ApplicationController
     current_user.remove_role :trainee, @booking
     current_user.remove_role :trainee, @booking.workout_session
     @booking.destroy
-    redirect_to bookings_url, notice: "Booking was successfully destroyed." 
+    redirect_to mybookings_path, notice: "Booking was successfully destroyed." 
   end
 
   private
