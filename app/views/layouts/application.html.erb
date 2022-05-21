@@ -10,8 +10,8 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class= "container">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
+  <body class= "container" style="background-color: #F4E8F6;align-items: center;">
+    <nav class="navbar navbar-expand-md navbar-light text-uppercase fs-6 fw-bolder" style="background-color: #F4E8F6; font-color:white;  ">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <%= link_to 'Home', root_path , class: 'nav-link' %>
+              <%= link_to 'Home', root_path , class: 'nav-link text-' %>
             </li>
             <li class="nav-item">
               <%= link_to 'Fitness Buddies', buddies_path , class: 'nav-link' %>
@@ -81,5 +81,8 @@
       <%end%>
       <%= yield %>
     </main>
+    <footer class="fixed-bottom text-center " style="text-align: center; background-color:grey;">
+  <p style="font-size:0.8rem">&copy; RP Enterprice</p>
+    </footer>
   </body>
 </html>
