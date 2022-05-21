@@ -1,5 +1,6 @@
 <div id="<%= dom_id buddy %>" class= "justify-content-md-center">
-  <div class= "justify-content-md-center">
+<h1 style="text-align:center"> <%= buddy.name %> </h1>
+  <div class= "justify-content-md-center" >
     <% if buddy.avatar.attached? %>
         <%= cl_image_tag buddy.avatar.key, cloud_name: 'richapujara', class: "img-thumbnail rounded mx-auto d-block" %>
       <% else %>
@@ -7,7 +8,7 @@
       <% end %>
 
   </div>
-  <div class= "align-elements-content-md-center">
+  <div style = "text-align:center; font-size: 1.2rem; " >
     <fieldset>
       <strong>Name: </strong>
       <%= buddy.name %>
@@ -26,6 +27,10 @@
     <fieldset>
       <strong>Location: </strong>
       <%= buddy.location %>
+    </fieldset>
+    <fieldset>
+      <strong>Contact Number: </strong>
+      <%= buddy.user.contact_number %>
     </fieldset>
   </div>
 

@@ -16,9 +16,6 @@ class WorkoutSessionsController < ApplicationController
 
   # GET /buddies/:buddy_id/workout_sessions/:id
   def show
-    puts "ID 1 #{@workout_session.buddy_id}"
-    puts "ID 2 #{current_user.buddy.id}"
-
     @booking = Booking.where("user_id = ? and workout_session_id = ?", current_user.id, params[:id]).first
   end
 
