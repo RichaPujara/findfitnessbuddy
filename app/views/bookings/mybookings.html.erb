@@ -1,13 +1,10 @@
 <h2> My Bookings </h2>
 <div>
-
-    <% if @mybookings.any? %>>
-        <%= @mybookings.each do |booking| %>
-                <p>
-                    <%= render booking %>
-                </p>
-        <% end %>
-    <% else %>
-        <p> Currently you have made no bookings for any workout sessions.</p>
+  <% if @mybookings.any? %>
+    <% @mybookings.each do |booking| %>
+      <p><%= render booking %></p>
     <% end %>
+  <% else %>
+    <p> Currently you have made no bookings for any workout sessions.</p>
+  <% end %>
 </div>

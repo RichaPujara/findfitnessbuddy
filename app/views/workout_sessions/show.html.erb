@@ -15,7 +15,7 @@
   </div>
 <% end %>
 
-<% if user_signed_in? && policy(@workout_session).edit? || current_user.buddy.id != @workout_session.buddy_id %>
+<% if user_signed_in? && policy(@workout_session).edit? || @current_user.buddy.nil? || current_user.buddy.id != @workout_session.buddy_id %>
   <div>
     <%= link_to "Edit this workout session", edit_workout_session_path(@workout_session), class: "btn btn-primary" %>
     <%= button_to "Destroy this workout session", @workout_session, class: 'btn btn-danger', method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete '#{@workout_session.name}' ?" } } %>
@@ -25,5 +25,5 @@
 <br>
 
 <div>
-  <%= link_to "Back to workout sessions", buddy_workout_sessions_path(current_user.buddy), class: "btn btn-outline-primary" %>
+  <%= link_to "Back to workout sessions", buddy_workout_sessions_path(params["buddy_id"]), class: "btn btn-outline-primary" %>
 </div>
