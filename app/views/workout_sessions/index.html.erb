@@ -1,18 +1,30 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Workout sessions</h1>
-<div id="workout_sessions">
-  <% @buddy.workout_sessions.each do |workout_session| %>
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title"><%= "#{workout_session.name}" %></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><%= "Workout Category: #{workout_session.workout_category}" %></h6>
-          <p class="card-text"><%= "Schedule: #{workout_session.date}" %></p>
-          <p class="card-text"><%= "Duration: #{workout_session.duration} minutes" %></p>
-          <%= link_to "More details", buddy_workout_session_url(@buddy, workout_session.id)%>
-      </div>
-    </div>  
-    <br>
-  <% end %>
-</div>
+<% if @buddy.workout_sessions.any? %>
+  <div class="container">
+    <div class="row row-cols-*" style="margin = auto; width= 100%">
+      <% @buddy.workout_sessions.each do |workout_session| %>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title"><%= "#{workout_session.name}" %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= "Workout Category: #{workout_session.workout_category}" %></h6>
+              <p class="card-text"><%= "Schedule: #{workout_session.date}" %></p>
+              <p class="card-text"><%= "Duration: #{workout_session.duration} minutes" %></p>
+              <%= link_to "More details", buddy_workout_session_url(@buddy, workout_session.id)%>
+          </div>
+        </div>
 
+        <br>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <p><%= @buddy.name%> has no workout sessions currently. Please check back later</p>
+<% end %>
+
+<p>
+  <div>
+    <%= link_to "Back to #{@buddy.name} profile", buddy_path(@buddy), class: "btn btn-primary" %>
+  </div>
+</p>

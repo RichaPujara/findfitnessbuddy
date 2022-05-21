@@ -2,7 +2,7 @@ class WorkoutSessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   before_action :set_workout_session, only: %i[ show edit update destroy participants]
-  before_action :get_buddy, only: %i[ new index create participants]
+  before_action :get_buddy, only: %i[ new index create participants update destroy show]
   before_action :check_auth, only: %i[ edit, update, destroy]
 
   # GET /buddies/:buddy_id/workout_sessions
@@ -39,10 +39,6 @@ class WorkoutSessionsController < ApplicationController
   # POST /buddies/:buddy_id/workout_sessions
   def create
     @workout_session = @buddy.workout_sessions.create(workout_session_params)
-    # @workout_session = WorkoutSession.new(buddy_id: params[:buddy_id],workout_session_params)
-
-    # @booking = Booking.new(workout_session_id: params[:workout_session_id], user_id: current_user.id)
-    
     if @workout_session.save
       @buddy.user.add_role :trainer, @workout_session
       redirect_to buddy_workout_session_path(@buddy, @workout_session.id), notice: "Workout session was successfully created." 
@@ -54,18 +50,19 @@ class WorkoutSessionsController < ApplicationController
   # PATCH/PUT /buddies/:buddy_id/workout_sessions/:id
   def update
       if @workout_session.update(workout_session_params)
-        redirect_to buddy_workout_session_path(current_user.buddy, @workout_session.id), notice: "Workout session was successfully updated." 
+        redirect_to buddy_workout_session_path(@buddy, @workout_session.id), notice: "Workout session was successfully updated." 
       else
         render :edit, status: :unprocessable_entity
       end
-    
   end
 
   # DELETE /buddies/:buddy_id/workout_sessions/:id
   def destroy
-    @workout_session.destroy
-    redirect_to buddy_workout_sessions_path(current_user.buddy), notice: "Workout session was successfully destroyed." 
-     
+    if @workout_session.destroy
+      redirect_to buddy_workout_sessions_path(@buddy), notice: "Workout session was successfully destroyed." 
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def participants
@@ -79,7 +76,12 @@ class WorkoutSessionsController < ApplicationController
     end
 
     def get_buddy
-      @buddy = Buddy.find(params[:buddy_id])
+      unless params[:buddy_id].nil?
+        @buddy = Buddy.find(params[:buddy_id])
+      else
+        @buddy = Buddy.find(@workout_session.buddy_id)
+        params[:buddy_id] = @buddy.id
+      end
     end
 
     # Only allow a list of trusted parameters through.
