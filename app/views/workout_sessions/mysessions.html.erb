@@ -8,10 +8,10 @@
       <% @mysessions.each do |workout_session| %>
         <div class="card" style="width: 18rem;">
           <div class="card-body">
-              <h5 class="card-title"><%= "#{workout_session.name}" %> />
-              <h6 class="card-subtitle mb-2 text-muted"><%= "Workout Category: #{workout_session.workout_category}" %> />
-              <p class="card-text"><%= "Schedule: #{workout_session.date}" %> />
-              <p class="card-text"><%= "Duration: #{workout_session.duration} minutes" %> />
+              <h5 class="card-title"><%= "#{workout_session.name}" %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= "Workout Category: #{workout_session.workout_category}" %></h6>
+              <p class="card-text"><%= "Schedule: #{workout_session.date}" %></p>
+              <p class="card-text"><%= "Duration: #{workout_session.duration} minutes" %></p>
               <%= link_to "More details", buddy_workout_session_url(@buddy, workout_session.id)%>
               <%= link_to "View Participants", participants_url(@buddy, workout_session.id) %>
           </div>
