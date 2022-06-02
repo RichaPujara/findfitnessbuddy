@@ -43,7 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_184404) do
   end
 
   create_table "bookings", force: :cascade do |t|
-    t.boolean "booking_status", default: true
+    t.boolean "booking_status", default: false
     t.bigint "user_id", null: false
     t.bigint "workout_session_id", null: false
     t.datetime "created_at", null: false

@@ -10,9 +10,23 @@
 <div>
 
 <% if user_signed_in? && @booking.nil? && ( current_user.buddy.nil? || current_user.buddy.id != @workout_session.buddy_id ) %>
-  <div>
+  <%
+=begin%>
+ <div>
     <%= button_to "Book Session", workout_session_bookings_path(@workout_session.id),data: {turbo: false}, class: "btn btn-primary" %>
-  </div>
+  </div> 
+<%
+=end%>
+<button data-stripe = 'payment'> Book Session <%= number_to_currency(@workout_session.fees) %> </button>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  document.querySelector("[data-stripe='payment']").addEventListener("click",() => {
+    const stripe = Stripe("<%= Rails.application.credentials.dig(:stripe, :public_key) %>");
+    stripe.redirectToCheckout({
+      sessionId: "<%= @session_id %>"
+    })
+  })
+</script>
 <% end %>
 
 <% if user_signed_in? && policy(@workout_session).edit? %>

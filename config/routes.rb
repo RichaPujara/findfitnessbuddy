@@ -22,7 +22,8 @@ Rails.application.routes.draw do
 
   get 'buddies/:buddy_id/mysessions/:id/participants/', to: 'workout_sessions#participants', as: 'participants'
 
-
+  get 'payments/success', to: 'payments#success'
+  post 'payments/webhook', to: 'payments#webhook'
   resources :buddies do
     resources :workout_sessions do
       resources :bookings

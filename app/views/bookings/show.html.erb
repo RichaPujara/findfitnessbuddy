@@ -2,7 +2,9 @@
 
 <%= render @booking %>
 
-<% if current_user.has_role?(:trainer, @booking) %>
+<>
+
+<% if current_user.has_role?(:trainee, @booking) %>
   <div>
     <%= button_to "Cancel this booking", @booking, method: :delete, data: {turbo: false} %>
   </div>

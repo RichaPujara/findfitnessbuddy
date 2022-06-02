@@ -86,3 +86,11 @@ gem "activestorage-cloudinary-service", "~> 0.2.3"
 
 gem "dotenv-rails", "~> 2.7"
 
+
+gem "omniauth", "~> 2.1"
+
+gem "omniauth-github", "~> 2.0"
+
+gem "stripe", "~> 6.2"
+
+gem "webhook", "~> 1.0"

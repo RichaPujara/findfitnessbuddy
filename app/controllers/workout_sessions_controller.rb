@@ -16,7 +16,29 @@ class WorkoutSessionsController < ApplicationController
 
   # GET /buddies/:buddy_id/workout_sessions/:id
   def show
-    @booking = Booking.where("user_id = ? and workout_session_id = ?", current_user.id, params[:id]).first
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      customer_email: current_user.email,
+      line_items: [{
+        name: @workout_session.name,
+
+        description: @workout_session.description,
+        amount: (@workout_session.fees * 100).to_i,
+        currency: 'aud',
+        quantity: 1
+
+      }],
+      payment_intent_data: {
+        metadata: {
+          workout_session_id: @workout_session.id,
+          user_id: current_user.id
+        }
+      },
+      success_url: "#{root_url}payments/success?workout_session_id=#{@workout_session.id}",
+      cancel_url: "#{root_url}buddies"
+    )
+    @session_id = session.id
+    # @booking = Booking.where("user_id = ? and workout_session_id = ?", current_user.id, params[:id]).first
   end
 
   def mysessions
